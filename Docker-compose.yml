@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  fastapi-static:
+    # 构建镜像
+    build: .
+    # 容器名称
+    container_name: fa33
+    # 端口映射: 宿主机端口:容器端口
+    ports:
+      - "8099:80"
+    # 数据卷挂载: 宿主机目录:容器目录
+    volumes:
+      - ./html:/app/web
+    # 环境变量配置
+    environment:
+      - INDEX_DIR=/app/web
+    # 重启策略: 除非手动停止，否则总是重启
+    restart: unless-stopped
+    # 容器资源限制（可选配置）
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
